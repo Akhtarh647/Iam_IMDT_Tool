@@ -27,6 +27,4 @@ jobs:
       - name: 'Verify Login'
         run: 'gcloud auth list'
 
-      # Example command: List your storage buckets (uncomment if needed)
-      # - name: 'List Buckets'
-      #   run: 'gsutil ls'
+     
