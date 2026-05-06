@@ -1,0 +1,32 @@
+name: GCP Integration
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  setup-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # This step logs into GCP using the secret you will add to GitHub
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      # Sets up the gcloud CLI so you can run cloud commands
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      # Verification step: This will list the active account to prove it works
+      - name: 'Verify Login'
+        run: 'gcloud auth list'
+
+      # Example command: List your storage buckets (uncomment if needed)
+      # - name: 'List Buckets'
+      #   run: 'gsutil ls'
